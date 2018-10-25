@@ -9,7 +9,7 @@ function isLogin(req,res,next){
             let decodedobj = decoded
             // check the user
             User.findOne({
-                _id: req.decoded.userid
+                _id: decodedobj.userid
             })
               .then(user => {
                 if(user) {

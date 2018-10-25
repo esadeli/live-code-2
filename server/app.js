@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 const UserRoutes = require('./routes/UserRoutes')
+const VideoRoutes = require('./routes/VideoRoutes')
 const app = express()
 mongoose.connect('mongodb://localhost:27017/livecode2db', {useNewUrlParser: true})
 
@@ -12,6 +13,7 @@ app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.use(cors())
 app.use('/users', UserRoutes)
+app.use('/videos', VideoRoutes)
 
 app.get('/', (req,res) =>{ res.send('OK')})
 
