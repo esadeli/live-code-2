@@ -5,16 +5,20 @@
           <div class="col-md-4">
             <Listvideo></Listvideo>
           </div>
+          <div class="col-md-8">
+            <router-view></router-view>
+          </div>
         </div>
     </div>
 </template>
 
 <script>
 import Listvideo from '@/components/Listvideo.vue'
+import Detail from '@/views/Detail.vue'
 export default {
   name: 'Homepage',
   components: {
-    Listvideo
+    Listvideo, Detail
   }
 }
 </script>

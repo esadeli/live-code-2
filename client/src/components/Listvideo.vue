@@ -4,6 +4,7 @@
           <form>
             <div class="input-group mb-3">
               <input
+                v-model="keyword"
                 type="text"
                 class="form-control"
                 placeholder="Search videos across YouTube..."
@@ -15,7 +16,8 @@
                 <button
                   class="btn btn-outline-secondary"
                   type="button"
-                  id="go-button-addon">
+                  id="go-button-addon"
+                  v-on:click="searchvideo()">
                   Go!
                 </button>
               </div>
@@ -32,6 +34,9 @@
                   <br />
                 </div>
               </li>
+              <router-link :to="{ name: 'id', params: { id: video.etag }}">
+                <button type="button" v-on:click="detailvideo(video.snippet.title, video.snippet.thumbnails.default.url, video.etag)" class="btn btn-secondary">Details</button>
+              </router-link>
             </a>
           </ul>
     </div>
@@ -43,7 +48,8 @@ export default {
   name: 'Listvideo',
   data () {
     return {
-      listvideos: []
+      listvideos: [],
+      keyword: ''
     }
   },
   methods: {
@@ -51,12 +57,29 @@ export default {
       let self = this
       axios.get('https://www.googleapis.com/youtube/v3/search?key=AIzaSyC5EzdbVWOSipBo17FiRzioGloXeAMNH_M&part=snippet,id&order=date&maxResults=15')
         .then(result => {
+          self.listvideos = []
           self.listvideos = result.data.items
           console.log('HASIL-----', result.data.items)
         })
         .catch(error => {
           console.log('ERROR GET Youtube video ', error)
         })
+    },
+    searchvideo () {
+      let self = this
+      axios.get(`https://www.googleapis.com/youtube/v3/search?key=AIzaSyC5EzdbVWOSipBo17FiRzioGloXeAMNH_M&part=snippet,id&order=date&maxResults=15&q=${self.keyword}`)
+        .then(result => {
+          self.listvideos = []
+          self.listvideos = result.data.items
+          console.log('HASIL Search-----', result.data.items)
+        })
+        .catch(error => {
+          console.log('ERROR GET Youtube video ', error)
+        })
+    },
+    detailvideo (title, url, id) {
+      console.log('detail--------', title, url, id)
+      this.$router.push({ path: `/${id}` })
     }
   },
   created () {
