@@ -8,9 +8,16 @@ class VideoController {
     static listvideos(req,res) {
         Video.find({})
           .then(videos => {
+              let sortedArr = []
+              videos.forEach(videop =>{
+                  if(videop.likes.length > 0){
+                      sortedArr.push(videop)
+                  }
+              })
+
               res.status(200).json({
                   msg: 'List of videos',
-                  data: videos
+                  data: sortedArr
               })
           })
           .catch(error => {

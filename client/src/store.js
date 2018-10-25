@@ -46,7 +46,6 @@ export default new Vuex.Store({
       context.commit('errorobj', '')
     },
     likeobj (context, payload) {
-      console.log('payload------', payload)
       let token = payload.token
       let title = payload.title
       let url = payload.url
@@ -62,7 +61,6 @@ export default new Vuex.Store({
         }
       })
         .then(video => {
-          console.log('Result----', video.data)
           
           // get list of liked videos
           axios({
@@ -70,7 +68,6 @@ export default new Vuex.Store({
             url: 'http://localhost:3001/videos/lists'
           })
            .then(videos => {
-             console.log('result-----', videos.data.data)
              context.commit('getlikedvideos', videos.data.data) 
            })
            .catch(error => {
