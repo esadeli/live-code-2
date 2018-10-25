@@ -23,12 +23,10 @@ class VideoController {
     // likes video
     static likesvideo (req,res) {
         // check if video exist
-        // console.log('req.body------', req.body.url)
         Video.findOne({
             url: req.body.url
         })
           .then(video => {
-              // console.log('ini video ------------', video)
               // video is in the database
               if(video){
                 // if video found check likes
@@ -73,7 +71,7 @@ class VideoController {
                     }
               } else {
                  Video.create({
-                    tilte: req.body.title,
+                    title: req.body.title,
                     url: req.body.url
                  })
                    .then(videocreate => {
