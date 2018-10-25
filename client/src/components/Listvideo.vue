@@ -34,6 +34,9 @@
                   <br />
                 </div>
               </li>
+              <div v-if="token !==null && token!== ''">
+                <button type="button" v-on:click="likevideo(video.snippet.title, video.snippet.thumbnails.default.url)" class="btn btn-success">Like</button>
+              </div>
               <router-link :to="{ name: 'id', params: { id: video.etag }}">
                 <button type="button" v-on:click="detailvideo(video.snippet.title, video.snippet.thumbnails.default.url, video.etag)" class="btn btn-secondary">Details</button>
               </router-link>
@@ -59,7 +62,7 @@ export default {
         .then(result => {
           self.listvideos = []
           self.listvideos = result.data.items
-          console.log('HASIL-----', result.data.items)
+          // console.log('HASIL-----', result.data.items)
         })
         .catch(error => {
           console.log('ERROR GET Youtube video ', error)
@@ -71,11 +74,20 @@ export default {
         .then(result => {
           self.listvideos = []
           self.listvideos = result.data.items
-          console.log('HASIL Search-----', result.data.items)
+          // console.log('HASIL Search-----', result.data.items)
         })
         .catch(error => {
           console.log('ERROR GET Youtube video ', error)
         })
+    },
+    likevideo (title, url) {
+      // console.log('like video-------', title, url)
+      let likeobj = {
+        token: this.token,
+        url: url,
+        title: title
+      }
+      this.$store.dispatch('likeobj', likeobj)
     },
     detailvideo (title, url, id) {
       console.log('detail--------', title, url, id)
@@ -84,6 +96,11 @@ export default {
   },
   created () {
     this.getvideo()
+  },
+  computed: {
+    token () {
+      return this.$store.state.token
+    }
   }
 }
 </script>
