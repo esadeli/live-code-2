@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Navbar></Navbar>
+    <Homepage></Homepage>
     <!--
     <div id="nav">
       <router-link to="/">Home</router-link> |
@@ -12,9 +13,10 @@
 </template>
 <script>
 import Navbar from '@/components/Navbar.vue'
+import Homepage from '@/components/Homepage.vue'
 export default {
   components: {
-    Navbar
+    Navbar, Homepage
   }
 }
 </script>
